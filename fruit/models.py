@@ -11,6 +11,9 @@ sys.setdefaultencoding("utf8")
 class Fruit(models.Model):
     name = models.CharField(max_length = 512)
     description = models.TextField()
+    # def __init__(self, name, description):
+    #     self.name = name
+    #     self.description = description
     def __str__(self):
         return self.name
 
@@ -21,3 +24,12 @@ class SectionItem(models.Model):
     sectionItem = models.ForeignKey(Fruit, related_name='fruit_section') 
     def __str__(self):
         return self.section
+    
+    # def __init__(self, section, content, sectionItem, itemType = 1):
+    #     self.section = section
+    #     self.content = content
+    #     self.sectionItem = sectionItem
+    #     self.itemType = itemType
+
+    def convert2Dictionary(self):
+        return {"section":self.section, "content":self.content, "itemType":self.itemType}
