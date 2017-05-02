@@ -37,6 +37,8 @@ def addfruit(request):
             section_item = SectionItem()
             section_item.section = item['title']
             section_item.content = item['content']
+            if 'image_urls' in item:
+                section_item.image = item['image_urls']
             section_item.itemType = 1
             section_item.sectionItem = new_fruit
             section_item.save()
@@ -45,3 +47,19 @@ def addfruit(request):
 
 
     return HttpResponse("404")
+
+
+def getfruits(request):
+    fruits_list = []
+    saved_fruits_list = Fruit.objects.all()
+    for item in saved_fruits_list:
+        name = item.name
+        description = item.name
+        section_list = []
+        saved_fruit_sections_list = SectionItem.objects.filter(sectionItem__name = name)
+        for section in saved_fruit_sections_list:
+            section_list.append(section.convert2Dictionary())
+        fruit = {"name":name, "description":description, "section_list":section_list}
+        fruits_list.append(fruit)
+    json_str = json.dumps(fruits_list)
+    return HttpResponse(json_str)

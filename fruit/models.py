@@ -21,6 +21,7 @@ class SectionItem(models.Model):
     section = models.CharField(max_length = 512)
     content = models.TextField()
     itemType = models.IntegerField()
+    image = models.CharField(max_length = 512, null=True, blank = True)
     sectionItem = models.ForeignKey(Fruit, related_name='fruit_section') 
     def __str__(self):
         return self.section
@@ -32,4 +33,4 @@ class SectionItem(models.Model):
     #     self.itemType = itemType
 
     def convert2Dictionary(self):
-        return {"section":self.section, "content":self.content, "itemType":self.itemType}
+        return {"section":self.section, "content":self.content, "itemType":self.itemType , "image":self.image}
