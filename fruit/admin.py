@@ -9,7 +9,7 @@ class SectionInline(admin.TabularInline):
 
 class FruitAdmin(admin.ModelAdmin):
     inlines = [SectionInline]
-    fields = ('name', 'description')
+    fields = ('name', 'description', 'imageUrl')
 
 admin.site.register(Fruit, FruitAdmin)
 # admin.site.register(SectionItem)

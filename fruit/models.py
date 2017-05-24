@@ -11,6 +11,7 @@ sys.setdefaultencoding("utf8")
 class Fruit(models.Model):
     name = models.CharField(max_length = 512)
     description = models.TextField()
+    imageUrl = models.CharField(max_length = 512, null=True, blank = True)
     # def __init__(self, name, description):
     #     self.name = name
     #     self.description = description

@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
+import os
+
 
 # Create your views here.
 from .models import Fruit, SectionItem
@@ -21,6 +23,7 @@ def addfruit(request):
         new_fruit = Fruit()
         new_fruit.name = name
         new_fruit.description = description
+        new_fruit.imageUrl = req['image']
         print new_fruit
         fruit_list = Fruit.objects.filter(name = name)
         for item in fruit_list:
@@ -54,12 +57,17 @@ def getfruits(request):
     saved_fruits_list = Fruit.objects.all()
     for item in saved_fruits_list:
         name = item.name
-        description = item.name
+        description = item.description
         section_list = []
         saved_fruit_sections_list = SectionItem.objects.filter(sectionItem__name = name)
         for section in saved_fruit_sections_list:
             section_list.append(section.convert2Dictionary())
-        fruit = {"name":name, "description":description, "section_list":section_list}
+        fruit = {"name":name, "description":description, "imageUrl":item.imageUrl, "section_list":section_list}
         fruits_list.append(fruit)
     json_str = json.dumps(fruits_list)
     return HttpResponse(json_str)
+
+
+def getVideoInfo(request, param1):
+    status = os.popen("/Users/const_zhou/AppDev/You-Get/you-get/you-get --json " + param1)
+    return HttpResponse(status)
